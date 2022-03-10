@@ -21,4 +21,4 @@ static int zavorky(int n, int otevrenych, string s) {
         zavorky(n - 1, otevrenych + 1, s + "(");    
         }
     }
-    }
+}

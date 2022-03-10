@@ -25,15 +25,15 @@ public static void main(String[] args) {
 }
     public void print() {
         System.out.print(this.info);
-        if(this.sun != null) {
-            System.out.print(" S:{");
-            this.sun.print();
-            System.out.print("}, ");
-        }
         if(this.brother != null) {
             System.out.print("B:{");
             this.brother.print();
             System.out.print("}");
+        }
+        if(this.sun != null) {
+            System.out.print(" S:{");
+            this.sun.print();
+            System.out.print("}, ");
         }
     }
 }
