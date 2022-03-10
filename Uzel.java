@@ -13,9 +13,9 @@ public class Uzel {
         q.addLast(2);
         q.addLast(5);
         q.addLast(4);
-        q.addLast(6);
-        q.split()[1].printList();
-        q.selectSort().printList();
+        q.printList();
+        q.miss();
+        q.printList();
     }
 
     public void printList() {
@@ -101,5 +101,36 @@ public class Uzel {
         ks.next = null;
         kl.next = null;
         return new Uzel[]{l.next, s.next};
+    }
+    public Uzel bubbleSort() {
+        Uzel q = this;
+        Uzel r = null;
+        while (q != null) {
+            Uzel p = q.next;
+            Uzel min = q;
+            while (p != null) {
+                if (p.info < min.info) {
+                    min = p;
+                }
+                p = p.next;
+            }
+            q.next = min.next;
+            min.next = r;
+            r = min;
+            q = q.next;
+        }
+        return r;
+    }
+    public void miss(){
+        Uzel q = this;
+        try{
+        while(q.next.next != null){
+            q.next = q.next.next;
+            q = q.next;
+        }
+    }catch(Exception e){
+        return;
+    }
+    q.next = null;
     }
 }
