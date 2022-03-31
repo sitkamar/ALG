@@ -133,4 +133,23 @@ public class Uzel {
     }
     q.next = null;
     }
+    public void insertSort() {
+        Uzel q = this;
+        Uzel r = null;
+        while (q != null) {
+            Uzel p = q.next;
+            Uzel min = q;
+            while (p != null) {
+                if (p.info < min.info) {
+                    min = p;
+                }
+                p = p.next;
+            }
+            q.next = min.next;
+            min.next = r;
+            r = min;
+            q = q.next;
+        }
+        this.next = r;
+    }
 }
