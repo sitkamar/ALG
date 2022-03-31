@@ -152,4 +152,18 @@ public class Uzel {
         }
         this.next = r;
     }
+    public Uzel skipAll(int x){
+        Uzel p = this;
+        while(p!=null && p.info==x){
+            p = p.next;
+        }
+        Uzel q = p;
+        while(q!=null && q.next!=null){
+            if(q.next.info==x){
+                q.next = q.next.next;
+            }
+            q = q.next;
+        }
+        return p;
+    }
 }
