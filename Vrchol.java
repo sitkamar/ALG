@@ -50,6 +50,7 @@ public class Vrchol {
         if(this.right != null) min = Math.min(min, this.right.min());
         return min;
     }
+    
     public static void main(String[] args) {
         Vrchol root = new Vrchol(1, null, null);
         root.addLeft(2);
