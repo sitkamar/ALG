@@ -1,23 +1,23 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class Vrchol {
+public class Vertex {
     public int info;
-    public Vrchol left;
-    public Vrchol right;
-    public Vrchol(int info, Vrchol left, Vrchol right) {
+    public Vertex left;
+    public Vertex right;
+    public Vertex(int info, Vertex left, Vertex right) {
         this.info = info;
         this.left = left;
         this.right = right;
     }
     public void addLeft(int info) {
-        this.left = new Vrchol(info, null, null);
+        this.left = new Vertex(info, null, null);
     }
     public void addRight(int info) {
-        this.right = new Vrchol(info, null, null);
+        this.right = new Vertex(info, null, null);
     }
     public void print(){
-        System.out.print(this.info);
+        System.out.print(this.info+ " :{");
         if(this.left != null) {
             System.out.print("L:{");
             this.left.print();
@@ -26,14 +26,14 @@ public class Vrchol {
         if(this.right != null) {
             System.out.print("R:{");
             this.right.print();
-            System.out.print("}");
+            System.out.print("}}");
         }
     }
     public void print2(){
-        Stack<Vrchol> zas = new Stack<Vrchol>();
+        Stack<Vertex> zas = new Stack<Vertex>();
         zas.push(this);
         while(!zas.isEmpty()){
-            Vrchol q = zas.pop();
+            Vertex q = zas.pop();
             System.out.print(q.info + " ");
             if(q.right != null) zas.push(q.right);
             if(q.left != null) zas.push(q.left);
@@ -64,7 +64,7 @@ public class Vrchol {
         if(this.right != null) count += this.right.countLeafs();
         return count;
     }
-    public static int countLeafs(Vrchol v){
+    public static int countLeafs(Vertex v){
         if(v == null) return 0;
         if(v.left == null && v.right == null) return 1;
         return countLeafs(v.left) + countLeafs(v.right);
@@ -76,19 +76,18 @@ public class Vrchol {
         if(this.right != null) count+= this.right.countInHeight(h-1);
         return count;
     }
-    public static int countInHeight(Vrchol v, int h){
+    public static int countInHeight(Vertex v, int h){
         if(v == null) return 0;
         if(h == 0) return 1;
         return countInHeight(v.left, h-1) + countInHeight(v.right, h-1);
     }
-    public static int countOnLastHeight(Vrchol v, int h){
-        ArrayList<Vrchol> zas = new ArrayList<Vrchol>();
+    public static int countOnLastHeight(Vertex v, int h){
+        ArrayList<Vertex> zas = new ArrayList<Vertex>();
         zas.add(v);
-        ArrayList<Vrchol> newZas = new ArrayList<Vrchol>();
+        ArrayList<Vertex> newZas = new ArrayList<Vertex>();
         while(h > 0 && zas.size() > 0){
-
             newZas.clear();
-                for(Vrchol q : zas){
+                for(Vertex q : zas){
                     if(q.left != null) newZas.add(q.left);
                     if(q.right != null) newZas.add(q.right);
                 }
@@ -96,14 +95,14 @@ public class Vrchol {
         }
         return newZas.size();
     }
-    public static int largestHeight(Vrchol v, int h){
-        ArrayList<Vrchol> zas = new ArrayList<Vrchol>();
+    public static int largestHeight(Vertex v, int h){
+        ArrayList<Vertex> zas = new ArrayList<Vertex>();
         zas.add(v);
-        ArrayList<Vrchol> newZas = new ArrayList<Vrchol>();
+        ArrayList<Vertex> newZas = new ArrayList<Vertex>();
         int max = 1;
         while(h > 0 && zas.size() > 0){
             newZas.clear();
-                for(Vrchol q : zas){
+                for(Vertex q : zas){
                     if(q.left != null) newZas.add(q.left);
                     if(q.right != null) newZas.add(q.right);
                 }
@@ -121,13 +120,28 @@ public class Vrchol {
     public boolean isSymetric(){
         return isSymetric(this.left, this.right);
     }
-    private static boolean isSymetric(Vrchol v1, Vrchol v2){
+    private static boolean isSymetric(Vertex v1, Vertex v2){
         if(v1 == null && v2 == null) return true;
         if(v1 == null || v2 == null) return false;
         return isSymetric(v1.left, v2.right) && isSymetric(v1.right, v2.left);
     }
+    public boolean isFull(){
+        return isFull(this.left) && isFull(this.right);
+    }
+    private static boolean isFull(Vertex v){
+        if(v == null) return true;
+        if(v.left == null || v.right == null) return false;
+        return isFull(v.left) && isFull(v.right);
+    }
+    public static int maxLeafHeight(Vertex v){
+        if(v == null) return -1;
+        if(v.left == null && v.right == null) return 0;
+        if(v.left != null && v.right != null) return 1 + Math.max(maxLeafHeight(v.left), maxLeafHeight(v.right));
+        if(v.left != null) return 1 + maxLeafHeight(v.left);
+        return 1 + maxLeafHeight(v.right);
+    }
     public static void main(String[] args) {
-        Vrchol root = new Vrchol(1, null, null);
+        Vertex root = new Vertex(1, null, null);
         root.addLeft(2);
         root.addRight(3);
         root.left.addLeft(4);
